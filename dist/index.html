@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Roomas — Roo Code Christmas</title>
+    <style>
+      :root {
+        --bg0: #061018;
+        --bg1: #0b1a24;
+        --fg: #eaf3ff;
+        --muted: rgba(234, 243, 255, 0.72);
+        --glass: rgba(255, 255, 255, 0.08);
+        --glass2: rgba(255, 255, 255, 0.12);
+        --border: rgba(255, 255, 255, 0.14);
+        --holly: #2ecc71;
+        --berry: #ff4d6d;
+        --gold: #ffd166;
+        --shadow: 0 18px 70px rgba(0, 0, 0, 0.55);
+      }
+
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        color: var(--fg);
+        background: radial-gradient(1100px 800px at 70% 10%, rgba(255, 77, 109, 0.14), transparent 60%),
+          radial-gradient(900px 700px at 10% 30%, rgba(46, 204, 113, 0.14), transparent 60%),
+          linear-gradient(180deg, var(--bg0), var(--bg1));
+        overflow-x: hidden;
+      }
+
+      a { color: inherit; }
+
+      .wrap {
+        min-height: 100%;
+        display: grid;
+        place-items: center;
+        padding: 28px 18px 48px;
+      }
+
+      header {
+        width: min(980px, 100%);
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+      }
+
+      .logo {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        user-select: none;
+      }
+
+      .logo img {
+        height: 26px;
+        width: auto;
+        display: block;
+        filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45));
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 999px;
+        font-weight: 650;
+        letter-spacing: 0.2px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: conic-gradient(from 180deg, var(--holly), var(--gold), var(--berry), var(--holly));
+        box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.06);
+      }
+
+      main {
+        width: min(980px, 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .ribbon {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(900px 300px at 70% 0%, rgba(255, 209, 102, 0.18), transparent 60%),
+          radial-gradient(700px 250px at 10% 10%, rgba(46, 204, 113, 0.14), transparent 58%),
+          radial-gradient(650px 300px at 10% 80%, rgba(255, 77, 109, 0.10), transparent 55%);
+        mix-blend-mode: screen;
+        opacity: 0.85;
+      }
+
+      .content {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 18px;
+        padding: 24px;
+      }
+
+      @media (max-width: 860px) {
+        header { flex-direction: column; align-items: flex-start; }
+        .content { grid-template-columns: 1fr; }
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(30px, 4vw, 44px);
+        line-height: 1.1;
+        letter-spacing: -0.5px;
+      }
+
+      .sub {
+        margin-top: 10px;
+        color: var(--muted);
+        line-height: 1.55;
+        font-size: 15.5px;
+      }
+
+      .accent {
+        background: linear-gradient(90deg, var(--holly), var(--gold), var(--berry));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .cards {
+        display: grid;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .card {
+        padding: 14px 14px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.18);
+      }
+
+      .card b { font-weight: 750; }
+
+      .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+
+      button {
+        appearance: none;
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.06));
+        color: var(--fg);
+        padding: 11px 12px;
+        border-radius: 14px;
+        cursor: pointer;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      }
+
+      button:hover {
+        border-color: rgba(255, 255, 255, 0.22);
+        transform: translateY(-1px);
+      }
+
+      button:active {
+        transform: translateY(0px);
+      }
+
+      .panel {
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .unlock {
+        margin-top: 12px;
+        padding: 14px;
+        border-radius: 16px;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.18);
+        display: none;
+      }
+
+      .unlock.show { display: block; }
+
+      .unlock-top {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .avatar-wrap {
+        position: relative;
+        width: 84px;
+        height: 84px;
+        flex: 0 0 auto;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: rgba(255, 255, 255, 0.06);
+        box-shadow: 0 14px 50px rgba(0, 0, 0, 0.45);
+        overflow: hidden;
+      }
+
+      .avatar-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Simple CSS Santa hat overlay */
+      .avatar-wrap .hat {
+        position: absolute;
+        left: 10px;
+        top: -10px;
+        width: 56px;
+        height: 42px;
+        transform: rotate(-14deg);
+        pointer-events: none;
+      }
+
+      .avatar-wrap .hat::before {
+        content: "";
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 32px solid rgba(255, 77, 109, 0.95);
+        filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.35));
+      }
+
+      .avatar-wrap .hat::after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        top: 34px;
+        width: 48px;
+        height: 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow:
+          0 1px 0 rgba(0, 0, 0, 0.10) inset,
+          0 10px 18px rgba(0, 0, 0, 0.25);
+      }
+
+      .avatar-wrap .pom {
+        position: absolute;
+        left: 36px;
+        top: 4px;
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.94);
+        box-shadow:
+          0 1px 0 rgba(0, 0, 0, 0.10) inset,
+          0 12px 20px rgba(0, 0, 0, 0.30);
+      }
+
+      .wiggle {
+        animation: wiggle 800ms ease-in-out 1;
+      }
+
+      @keyframes wiggle {
+        0% { transform: rotate(0deg) scale(1); }
+        18% { transform: rotate(-2.2deg) scale(1.01); }
+        38% { transform: rotate(2.8deg) scale(1.02); }
+        60% { transform: rotate(-1.6deg) scale(1.01); }
+        100% { transform: rotate(0deg) scale(1); }
+      }
+
+      .meter {
+        margin-top: 12px;
+        height: 12px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        overflow: hidden;
+      }
+
+      .meter > div {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--holly), var(--gold), var(--berry));
+        border-radius: 999px;
+        transition: width 260ms ease;
+      }
+
+      .tiny {
+        margin-top: 10px;
+        font-size: 12.5px;
+        color: rgba(234, 243, 255, 0.62);
+      }
+
+      footer {
+        width: min(980px, 100%);
+        margin-top: 14px;
+        color: rgba(234, 243, 255, 0.55);
+        font-size: 12.5px;
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      /* Snow */
+      .snow {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 2;
+        opacity: 0.95;
+      }
+
+      .flake {
+        position: absolute;
+        top: -12px;
+        width: var(--s);
+        height: var(--s);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.85);
+        filter: blur(0.2px);
+        left: var(--x);
+        animation: fall var(--d) linear infinite;
+        transform: translate3d(0, 0, 0);
+      }
+
+      .flake::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.55));
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-14px) translateX(0);
+          opacity: 0.0;
+        }
+        10% { opacity: 0.9; }
+        100% {
+          transform: translateY(calc(100vh + 40px)) translateX(var(--w));
+          opacity: 0.25;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .flake { animation: none; display: none; }
+        button:hover { transform: none; }
+        .wiggle { animation: none; }
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="snow" aria-hidden="true" id="snow"></div>
+
+    <div class="wrap">
+      <header>
+        <div class="logo">
+          <img
+            src="https://roocode.com/Roo-Code-Logo-Horiz-white.svg"
+            alt="Roo Code"
+            loading="eager"
+          />
+          <span class="badge"><span class="dot" aria-hidden="true"></span> Roomas Mode</span>
+        </div>
+        <div class="badge" title="Yes, this is a real metric.">
+          <span aria-hidden="true">🎁</span>
+          <span id="status">Compiling cheer…</span>
+        </div>
+      </header>
+
+      <main>
+        <div class="ribbon" aria-hidden="true"></div>
+        <div class="content">
+          <section>
+            <h1>
+              Welcome to <span class="accent">Roomas</span> — where the Roo ships joy,
+              not just code.
+            </h1>
+            <p class="sub">
+              It’s Christmas, the build is green (mostly), and the only thing flaking more than the snow
+              is that one dependency you didn’t pin. Let’s keep it festive.
+            </p>
+
+            <div class="cards">
+              <div class="card">
+                <b>Today’s release:</b> <span id="releaseName">Roo-dolph v25.12</span> —
+                now with 30% more "it works on my sleigh".
+              </div>
+              <div class="card">
+                <b>Holiday SLA:</b> All bugs filed after <span id="cutoff"></span> are automatically
+                reclassified as "seasonal features".
+              </div>
+              <div class="card">
+                <b>Jingle Bytes:</b> Every time you click a button, somewhere a test becomes… slightly more
+                confident.
+              </div>
+            </div>
+
+            <div class="row" aria-label="Actions">
+              <button id="btnCheer" type="button">Add Cheer</button>
+              <button id="btnNaughty" type="button">Run Naughty-or-Nice</button>
+              <button id="btnSnow" type="button">Toggle Snow</button>
+            </div>
+
+            <p class="tiny" id="hint">Tip: If the cheer hits 100%, you unlock the secret build message.</p>
+          </section>
+
+          <aside class="panel" aria-label="Roomas Console">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+              <div>
+                <div style="font-weight:800; letter-spacing:0.2px;">Roomas Console</div>
+                <div class="tiny">A highly scientific holiday telemetry system.</div>
+              </div>
+              <div class="badge" style="padding:8px 10px; background: rgba(0,0,0,0.20);">
+                <span aria-hidden="true">🦘</span>
+                <span id="rooMood">mood: merry</span>
+              </div>
+            </div>
+
+            <div style="margin-top:14px;" class="card">
+              <div style="display:flex; justify-content:space-between; gap:12px; align-items:baseline;">
+                <div style="font-weight:800;">Cheer Level</div>
+                <div class="tiny"><span id="cheerVal">0</span>%</div>
+              </div>
+              <div class="meter" aria-label="Cheer level">
+                <div id="cheerBar" style="width:0%"></div>
+              </div>
+              <div class="tiny" id="cheerNote">Status: awaiting hot cocoa.</div>
+            </div>
+
+            <div style="margin-top:12px;" class="card">
+              <div style="font-weight:800;">Latest Log</div>
+              <div class="tiny" id="log">$ roomas init --with-tinsel</div>
+            </div>
+
+            <div style="margin-top:12px;" class="card">
+              <div style="font-weight:800;">Build Carol</div>
+              <div class="tiny" id="carol">
+                "On the first day of Roomas my Roo gave to me… one passing test in a flaky CI." 
+              </div>
+            </div>
+
+            <div class="unlock" id="unlock" aria-live="polite">
+              <div class="unlock-top">
+                <div style="display:flex; gap:12px; align-items:center;">
+                  <div class="avatar-wrap" id="avatarWrap" title="Kangaroo unlocked: Christmas edition">
+                    <img
+                      src="https://avatars.githubusercontent.com/u/211522643?s=200&v=4"
+                      alt="Roo Code kangaroo avatar"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    />
+                    <span class="hat" aria-hidden="true"></span>
+                    <span class="pom" aria-hidden="true"></span>
+                  </div>
+                  <div>
+                    <div style="font-weight:900; letter-spacing:0.2px;">Achievement Unlocked</div>
+                    <div class="tiny" id="unlockText">Ho-ho-hop! The Roomas Roo is now officially festive.</div>
+                  </div>
+                </div>
+                <div class="badge" style="padding:8px 10px; background: rgba(0,0,0,0.20);">
+                  <span aria-hidden="true">🎅</span>
+                  <span>Hat deployed</span>
+                </div>
+              </div>
+              <div class="tiny" style="margin-top:10px;">
+                You’ve reached 100% cheer. Please proceed to ship joy (and maybe a hotfix).
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+
+      <footer>
+        <div>Made for Roo Code Christmas — <b>Roomas</b> edition.</div>
+        <div>
+          If you see a bug, it’s a snowflake: unique and temporary.
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        const $ = (id) => document.getElementById(id);
+
+        const status = $("status");
+        const cutoff = $("cutoff");
+        const cheerVal = $("cheerVal");
+        const cheerBar = $("cheerBar");
+        const cheerNote = $("cheerNote");
+        const log = $("log");
+        const carol = $("carol");
+        const rooMood = $("rooMood");
+
+        const btnCheer = $("btnCheer");
+        const btnNaughty = $("btnNaughty");
+        const btnSnow = $("btnSnow");
+
+        const snow = $("snow");
+        const unlock = $("unlock");
+        const avatarWrap = $("avatarWrap");
+
+        const now = new Date();
+        const cutoffDate = new Date(now);
+        cutoffDate.setHours(17, 0, 0, 0);
+        const cutoffText = cutoffDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        cutoff.textContent = cutoffText;
+
+        const carols = [
+          '"On the second day of Roomas my Roo gave to me… two merges merging, and one passing test in a flaky CI."',
+          '"On the third day of Roomas my Roo gave to me… three lint warnings, two merges merging, and one passing test in a flaky CI."',
+          '"On the fourth day of Roomas my Roo gave to me… four PR approvals… (that I definitely read)."',
+          '"On the fifth day of Roomas my Roo gave to me… FIIIIIVE STAGED COMMITS!"',
+          '"On the sixth day of Roomas my Roo gave to me… six caches caching, and zero reproducible builds."'
+        ];
+
+        const logs = [
+          "$ roomas init --with-tinsel",
+          "$ git checkout -b fix/santa-segfault",
+          "$ npm install --save-dev cocoa",
+          "$ cargo test --all --ho-ho-hold-on",
+          "$ python -m pip install jinglebytes",
+          "$ dotnet build /p:Festive=true",
+          "$ make all && make it-merry"
+        ];
+
+        const statuses = [
+          "Compiling cheer…",
+          "Linting mistletoe…",
+          "Optimizing ho-ho-hot paths…",
+          "De-duping fruitcake dependencies…",
+          "Refactoring sleigh bells (breaking change)…",
+          "Caching cookies… (cache miss)",
+        ];
+
+        let cheer = 0;
+        let snowOn = true;
+
+        function setCheer(value) {
+          cheer = Math.max(0, Math.min(100, value));
+          cheerVal.textContent = String(cheer);
+          cheerBar.style.width = cheer + "%";
+
+          if (cheer === 0) cheerNote.textContent = "Status: awaiting hot cocoa.";
+          else if (cheer < 40) cheerNote.textContent = "Status: mildly festive.";
+          else if (cheer < 80) cheerNote.textContent = "Status: jolly with occasional stack traces.";
+          else if (cheer < 100) cheerNote.textContent = "Status: dangerously merry.";
+          else cheerNote.textContent = "Status: FULL ROOMAS. Deploy the confetti (responsibly).";
+
+          rooMood.textContent =
+            cheer < 30 ? "mood: cautiously merry" : cheer < 70 ? "mood: jolly" : cheer < 100 ? "mood: euphoric" : "mood: transcendently festive";
+
+          if (cheer === 100) {
+            status.textContent = "Build succeeded: 🎄 0 errors, 1 miracle.";
+            log.textContent = "$ roomas deploy --to=NorthPole --dry-run=false";
+            carol.textContent = '"On the final day of Roomas my Roo gave to me… one clean build and a very quiet pager."';
+
+            if (unlock) unlock.classList.add("show");
+            if (avatarWrap) {
+              avatarWrap.classList.remove("wiggle");
+              // restart animation
+              void avatarWrap.offsetWidth;
+              avatarWrap.classList.add("wiggle");
+            }
+          }
+        }
+
+        function rand(arr) {
+          return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        function addSnowflakes(count) {
+          snow.innerHTML = "";
+          for (let i = 0; i < count; i++) {
+            const flake = document.createElement("div");
+            flake.className = "flake";
+
+            const size = 2 + Math.random() * 5.5;
+            const x = Math.random() * 100;
+            const duration = 6 + Math.random() * 10;
+            const drift = (Math.random() * 2 - 1) * (18 + Math.random() * 38);
+            const delay = Math.random() * 6;
+
+            flake.style.setProperty("--s", size.toFixed(2) + "px");
+            flake.style.setProperty("--x", x.toFixed(2) + "vw");
+            flake.style.setProperty("--d", duration.toFixed(2) + "s");
+            flake.style.setProperty("--w", drift.toFixed(2) + "vw");
+            flake.style.animationDelay = delay.toFixed(2) + "s";
+            flake.style.opacity = String(0.35 + Math.random() * 0.6);
+
+            snow.appendChild(flake);
+          }
+        }
+
+        function toggleSnow() {
+          snowOn = !snowOn;
+          snow.style.display = snowOn ? "block" : "none";
+          log.textContent = snowOn ? "$ snow --enable" : "$ snow --disable";
+          status.textContent = snowOn ? "Snowfall service: running" : "Snowfall service: stopped";
+          btnSnow.textContent = snowOn ? "Toggle Snow" : "Toggle Snow";
+        }
+
+        function naughtyOrNice() {
+          const outcomes = [
+            "Nice ✅ — you wrote a test before the bug report arrived.",
+            "Nice ✅ — your PR description had actual words.",
+            "Nice-ish ⚠️ — you said 'quick fix' and meant it.",
+            "Naughty ❌ — you pushed to main… on Christmas Eve.",
+            "Naughty ❌ — you renamed a variable and called it refactor.",
+            "Undefined 🤷 — your code depends on 'latest'."
+          ];
+          const result = rand(outcomes);
+          status.textContent = "Naughty-or-Nice: checked";
+          log.textContent = "$ roomas judge --subject=dev --verdict=instant";
+          carol.textContent = '"Meanwhile, in CI… ' + (result.includes("Nice") ? "the bells rang." : "the elves sighed.") + '"';
+          cheer = Math.min(100, cheer + (result.includes("Nice") ? 18 : 6));
+          setCheer(cheer);
+          cheerNote.textContent = result;
+        }
+
+        btnCheer.addEventListener("click", () => {
+          if (cheer < 100) {
+            setCheer(cheer + 12);
+            status.textContent = rand(statuses);
+            log.textContent = rand(logs);
+            carol.textContent = rand(carols);
+          }
+        });
+
+        btnNaughty.addEventListener("click", naughtyOrNice);
+        btnSnow.addEventListener("click", toggleSnow);
+
+        // Init
+        setCheer(0);
+        addSnowflakes(42);
+        status.textContent = rand(statuses);
+
+        // Light ambient updates
+        setInterval(() => {
+          if (cheer >= 100) return;
+          status.textContent = rand(statuses);
+        }, 4200);
+      })();
+    </script>
+  </body>
+</html>
